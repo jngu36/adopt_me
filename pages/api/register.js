@@ -1,29 +1,26 @@
+import User from "../../Model/User";
+import mongoose from "mongoose";
 export default async function handler(req, res) {
-    if (req.method === 'POST') {
-      try {
-        const { email, password } = req.body;  
-  
-        const response = await fetch('http://localhost:5000/register', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            email,  
-            password,
-          }),
-        });
-  
-        if (response.ok) {
-          const data = await response.json();
-          res.status(200).json(data);
-        } else {
-          throw new Error('Registration failed');
-        }
-      } catch (error) {
-        res.status(500).json({ error: error.message });
-      }
+
+  const email = req.body.email;
+  const pass = req.body.password
+
+  try {
+    await mongoose.connect(process.env.MONGODB_URI);
+    const user = await User.create({ email: email, password: pass });
+
+    console.log(user);
+    
+    if (user) {
+      res.status(200).json({ data: data })
     } else {
-      res.status(405).end(); 
+
+      res.status(418).json({ msg: "something else happened" })
     }
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ msg: "something went wrong" })
+  }
 }
+
+

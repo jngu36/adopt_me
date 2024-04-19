@@ -1,29 +1,26 @@
+import User from "../../Model/User";
+import mongoose from "mongoose";
+
 export default async function handler(req, res) {
-    if (req.method === 'POST') {
-      try {
-        const { email, password } = req.body;
-  
-        const response = await fetch('http://localhost:5000/login', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            email,
-            password,
-          }),
-        });
-  
-        if (response.ok) {
-          const data = await response.json();
-          res.status(200).json(data);
-        } else {
-          throw new Error('Login failed');
-        }
-      } catch (error) {
-        res.status(500).json({ error: error.message });
-      }
-    } else {
-      res.status(405).end();
+
+  const email = req.body.email;
+  const pass = req.body.password
+
+  try {
+    await mongoose.connect(process.env.MONGODB_URI);
+    const user = await User.findOne({ email: email, password: pass });
+
+    if (user) {
+      res.status(200).json({ data: user })
+    }else{
+      console.log("no");
+      res.status(418).json({msg: "whoo boi!"});
     }
+  } catch (err) {
+    console.log(err);
+    
+    res.status(500).json({ msg: "something went wrong" })
+  }
 }
+
+

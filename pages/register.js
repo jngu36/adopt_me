@@ -19,6 +19,7 @@ export default function Login() {
         event.preventDefault();
     
         try {
+            console.log("trying");
             const response = await fetch('/api/register', {
                 method: 'POST', // Make sure to use POST method
                 headers: {
@@ -29,6 +30,8 @@ export default function Login() {
                     password: password
                 }),
             });
+            
+            console.log("did it work?");
     
             if (response.ok) {
                 // Registration successful
@@ -57,7 +60,7 @@ export default function Login() {
                         <label htmlFor="password_input" className="form-label">Password</label>
                         <input type="password" className="form-control" id="password_input" value={password} onChange={(e) => setPassword(e.target.value)} />
                     </div>
-                    <button type="submit" className="btn btn-primary">Submit</button>
+                    <button type="submit" className="btn btn-primary">Create Account</button>
                 </form>
 
                 <div className="container">
@@ -66,10 +69,6 @@ export default function Login() {
                         <div className='col-4 justify-content-right'></div>
                     </div>
                 </div>
-
-                <Alert severity="success" className={showAlert ? 'alert-shown' : 'alert-hidden'}>
-                    It works, you bozo
-                </Alert>
             </div>
         </>
     );
