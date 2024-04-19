@@ -1,5 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Alert from '@mui/material/Alert'
 import { useRouter } from 'next/router';
 import styles from '../styles/login.module.css'
@@ -9,8 +9,14 @@ export default function Login() {
 
     const [login, setLogin] = useState('');
     const [password, setPassword] = useState("");
-    const [showAlert, setAlert] = useState(false);
     const router = useRouter();
+
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (token) {
+            router.push("/");
+        }
+    }, []);
 
     const handleRegister = () => {
         router.push('/register')
@@ -22,13 +28,15 @@ export default function Login() {
         try {
             const response = await fetch('/api/login', {
                 method: 'POST', // Make sure to use POST method
-                headers: { 'Content-Type': 'application/json'},
-                body: JSON.stringify({ email: login, password: password}),
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email: login, password: password }),
             });
 
+            const data = response.json();
             if (response.ok) {
                 // Login successful
-                router.push('/');
+                localStorage.setItem('token', data.token);
+                router.reload();
             } else {
                 // Login failed
                 console.error('Login failed');
@@ -59,10 +67,6 @@ export default function Login() {
                         <div className={styles.registerLink}><p onClick={handleRegister}>Create Account</p></div>
                     </div>
                 </div>
-
-                <Alert severity="success" className={showAlert ? 'alert-shown' : 'alert-hidden'}>
-                    It works, you bozo
-                </Alert>
             </div>
         </>
     );

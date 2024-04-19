@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 
 function MenuCard() {
     return (
-        <div class="card" style={{ width: "18rem", borderRadius: "5%" }}>
+        <div class="card" style={{ width: "50vh", borderRadius: "5%", justifyContent: "center", textAlign: "center" }}>
             <div class="card-body">
                 <h5 class="card-title">Welcome to Adopt me!</h5>
                 <p class="card-text">Would you like to see cats or dogs?</p>

@@ -1,5 +1,6 @@
 import User from "../../Model/User";
 import mongoose from "mongoose";
+const jwt = require('jsonwebtoken');
 
 export default async function handler(req, res) {
 
@@ -11,7 +12,8 @@ export default async function handler(req, res) {
     const user = await User.findOne({ email: email, password: pass });
 
     if (user) {
-      res.status(200).json({ data: user })
+      const token = jwt.sign({ user }, process.env.JWT_SECRET, { expiresIn: '1h' })
+      res.status(200).json({ token });
     }else{
       res.status(418).json({msg: "whoo boi!"});
     }

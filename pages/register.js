@@ -1,12 +1,11 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { useState } from 'react';
-import Alert from '@mui/material/Alert'
+import { useState } from 'react'
 import { useRouter } from 'next/router';
 import styles from '../styles/login.module.css'
 import Navbar from './components/Navbar';
 export default function Login() {
 
-    const [login, setLogin] = useState('');
+    const [login, setLogin] = useState("");
     const [password, setPassword] = useState("");
     const router = useRouter();
 
@@ -14,16 +13,14 @@ export default function Login() {
         router.push('/login')
     }
 
-    const handleSubmit = async (event) => {
-        event.preventDefault();
+    const handleSubmit = async (e) => {
+        e.preventDefault();
     
         try {
-            console.log("trying");
             const response = await fetch('/api/register', {
                 method: 'POST', // Make sure to use POST method
                 headers: { 'Content-Type': 'application/json', },
-                body: JSON.stringify({ email: login, password: password
-                }),
+                body: JSON.stringify({ email: login, password: password}),
             });
             
             if (response.ok) {
@@ -58,11 +55,12 @@ export default function Login() {
 
                 <div className="container">
                     <div className="row justify-content-end">
-                        <div className={styles.registerLink}><p onClick={handleAccountExist}>Already have an account?</p></div>
+                        <div><p onClick={handleAccountExist}>Already have an account?</p></div>
                         <div className='col-4 justify-content-right'></div>
                     </div>
                 </div>
             </div>
+
         </>
     );
 }
