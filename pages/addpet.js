@@ -22,11 +22,14 @@ export default function AddPet() {
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({ name: name, age: age, gender: gender, pet_type: pet_type }),
+                    body: JSON.stringify({ name: name, age: age, gender: gender, pet_type: pet_type, adopted: 0 }),
                 });
 
                 if (response.ok) {
-                    router.push('/cats');
+                    pet_type === "Cat" ?
+                    router.push('/pets/Cat'):
+                    router.push('/pets/Dog');
+                    ;
                 } else {
                     console.error('Add Pet failed');
                 }

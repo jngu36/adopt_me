@@ -1,9 +1,23 @@
 import React from 'react';
 import styles from '../../styles/AnimalCard.module.css';
+import { useRouter } from 'next/router'
 
-function AnimalCard({ name = "Binugs", gender = "N/A", age = "99", adoptedBy = "", img="/image/adoptme.png"}) {
-    const handleClick = () => {
-        handleAdopt(_id);
+function AnimalCard({ name = "Binugs", gender = "N/A", age = "99", adopted = false, img = "/image/adoptme.png", id }) {
+
+    if(adopted){
+        img = "/image/kittypet.png";
+    }
+    const router = useRouter();
+
+    const handleClick = async () => {
+        await fetch('/api/adopt', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id: id}),
+        });
+
+        //router.reload();
+        
     };
 
     return (
@@ -20,9 +34,9 @@ function AnimalCard({ name = "Binugs", gender = "N/A", age = "99", adoptedBy = "
                             <b>Age: {age}</b><br />
                         </p>
                         {
-                            adoptedBy ?
+                            adopted ?
                                 <button className={styles.roundedbutton} onClick={handleClick}>I got adopted!</button> :
-                                <button className={styles.roundedbutton} onClick={handleClick}>Adopt!</button>
+                                <button className={styles.roundedbutton} onClick={handleClick} disabled>Adopt!</button>
                         }
                     </div>
                 </div>

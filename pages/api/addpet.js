@@ -8,11 +8,8 @@ export default async function handler(req, res) {
         const gender = req.body.gender;
         const type = req.body.pet_type;
 
-        console.log(name, age, gender, type)
-
-
         await mongoose.connect(process.env.MONGODB_URI);
-        const pet = await Pet.create({ name: name, age: age, gender: gender, pet_type: type });
+        const pet = await Pet.create({ name: name, age: age, gender: gender, pet_type: type, adopted: false});
 
         if (pet) {
             res.status(200).json({ pet: pet })

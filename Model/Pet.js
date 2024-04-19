@@ -16,6 +16,10 @@ const petSchema = new Schema({
     pet_type: {
         type: String,
         required: true
+    },
+    adopted: {
+        type: Boolean,
+        
     }
 });
 

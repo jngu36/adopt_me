@@ -10,9 +10,7 @@ export default function Cats() {
     const router = useRouter();
     const { pet_type } = router.query;
     const [pets, setPets] = useState([]);
-
-    console.log("type", pet_type);
-
+    
     const fetchPets = async () => {
         try {
             const response = await fetch(`/api/getPets`, {
@@ -52,6 +50,9 @@ export default function Cats() {
                                     name={pet.name}
                                     gender={pet.gender}
                                     age={pet.age}
+                                    img={pet_type === "Cat" ? "/image/adoptme.png" : "/image/dogcozy.png"}
+                                    id={pet._id}
+                                    adopted = {pet.adopted}
                                 />
                             </div>
                         ))}

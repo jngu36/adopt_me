@@ -13,7 +13,6 @@ export default async function handler(req, res) {
     if (user) {
       res.status(200).json({ data: user })
     }else{
-      console.log("no");
       res.status(418).json({msg: "whoo boi!"});
     }
   } catch (err) {
