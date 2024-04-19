@@ -8,7 +8,6 @@ export default function Login() {
 
     const [login, setLogin] = useState('');
     const [password, setPassword] = useState("");
-    const [showAlert, setAlert] = useState(false);
     const router = useRouter();
 
     const handleAccountExist = () => {
@@ -22,17 +21,11 @@ export default function Login() {
             console.log("trying");
             const response = await fetch('/api/register', {
                 method: 'POST', // Make sure to use POST method
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ 
-                    email: login,
-                    password: password
+                headers: { 'Content-Type': 'application/json', },
+                body: JSON.stringify({ email: login, password: password
                 }),
             });
             
-            console.log("did it work?");
-    
             if (response.ok) {
                 // Registration successful
                 router.push('/login');

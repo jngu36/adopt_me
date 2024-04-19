@@ -7,16 +7,10 @@ export default async function handler(req, res) {
 
   try {
     await mongoose.connect(process.env.MONGODB_URI);
-    const user = await User.create({ email: email, password: pass });
+    await User.create({ email: email, password: pass });
 
-    console.log(user);
-
-    if (user) {
-      res.status(200).json({ data: data })
-    } else {
-
-      res.status(418).json({ msg: "something else happened" })
-    }
+    res.status(200).json()
+    
   } catch (err) {
     console.log(err);
     res.status(500).json({ msg: "something went wrong" })
