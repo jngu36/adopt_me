@@ -1,0 +1,35 @@
+
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #dcdcdc97;
+    border-radius: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .logo {
+    color: #fe73a4;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 20px;
+
+    text-shadow: 
+    -1px -1px 0 rgb(255, 255, 255),  
+    1px -1px 0 rgb(255, 255, 255),
+    -1px 1px 0 rgb(255, 255, 255),
+    1px 1px 0 rgb(255, 255, 255);
+  }
+  
+
+  .loginLogoutButton {
+    padding: 8px 16px;
+    border-radius: 20px;
+    border: none;
+    background-color: #fe73a4;
+    color: #ffffff;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  

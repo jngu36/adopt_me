@@ -4,7 +4,6 @@ import Alert from '@mui/material/Alert'
 import { useRouter } from 'next/router';
 import styles from '../styles/login.module.css'
 import Navbar from './components/Navbar';
-
 export default function Login() {
 
     const [login, setLogin] = useState('');
@@ -12,40 +11,42 @@ export default function Login() {
     const [showAlert, setAlert] = useState(false);
     const router = useRouter();
 
-    const handleRegister = () => {
-        router.push('/register')
+    const handleAccountExist = () => {
+        router.push('/login')
     }
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-
+    
         try {
-            const response = await fetch('/api/login', {
+            const response = await fetch('/api/register', {
                 method: 'POST', // Make sure to use POST method
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({
+                body: JSON.stringify({ 
                     email: login,
                     password: password
                 }),
             });
-
+    
             if (response.ok) {
-                // Login successful
-                router.push('/');
+                // Registration successful
+                router.push('/login');
             } else {
-                // Login failed
-                console.error('Login failed');
+                // Registration failed
+                console.error('Registration failed');
             }
         } catch (error) {
-            console.error('Error logging in:', error);
+            console.error('Error registering user:', error);
         }
     };
+    
+
 
     return (
         <>
-            <Navbar />
+        <Navbar/>
             <div className="container body_full" style={{ width: "500px" }}>
                 <form onSubmit={handleSubmit} className="border" style={{ padding: "50px" }}>
                     <div className="mb-3">
@@ -61,7 +62,8 @@ export default function Login() {
 
                 <div className="container">
                     <div className="row justify-content-end">
-                        <div className={styles.registerLink}><p onClick={handleRegister}>Create Account</p></div>
+                        <div className={styles.registerLink}><p onClick={handleAccountExist}>Already have an account?</p></div>
+                        <div className='col-4 justify-content-right'></div>
                     </div>
                 </div>
 

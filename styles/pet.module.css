@@ -1,0 +1,30 @@
+.maincontainer {
+    border-radius: 20px;
+    background-color: #faeded; 
+    padding: 20px;
+    margin: auto;
+    width: 80%; 
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); 
+  }
+  
+  .buttoncontainer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  
+  .roundedbutton {
+    background-color: #fe73a4;
+    color: #ffffff;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    text-decoration: none;
+  }
+  
+  .roundedbutton:hover {
+    background-color: #e64a87; 
+  }
+  

@@ -1,0 +1,15 @@
+.roundedbutton {
+    background-color: #fe73a4;
+    color: #ffffff;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    text-decoration: none; 
+  }
+
+  .roundedbutton:hover {
+    background-color: #e64a87; 
+  }
+  

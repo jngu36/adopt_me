@@ -1,0 +1,16 @@
+.registerLink {
+    text-align: center;
+    margin-top: 10px;
+  }
+  
+  .registerLink p {
+    align-items: center;
+    color: #007bff;
+    cursor: pointer;
+    text-decoration: none;
+  }
+  
+  .registerLink p:hover {
+    text-decoration: underline;
+  }
+  
