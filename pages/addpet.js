@@ -7,29 +7,33 @@ import styles from '../styles/pet.module.css';
 export default function AddPet() {
     const [name, setName] = useState('');
     const [age, setAge] = useState('');
-    const [gender, setGender] = useState('');
-    const [breed, setBreed] = useState('');
+    const [gender, setGender] = useState("Male");
+    const [pet_type, setType] = useState("Cat");
     const router = useRouter();
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        
-        try {
-            const response = await fetch('/api/addpet', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ name, gender, age, breed }),
-            });
 
-            if (response.ok) {
-                router.push('/cats');
-            } else {
-                console.error('Add Pet failed');
+        if (name && age && gender && pet_type) {
+            try {
+
+                const response = await fetch('/api/addpet', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ name: name, age: age, gender: gender, pet_type: pet_type }),
+                });
+
+                if (response.ok) {
+                    router.push('/cats');
+                } else {
+                    console.error('Add Pet failed');
+                }
+
+            } catch (error) {
+                console.error('Error adding pet:', error);
             }
-        } catch (error) {
-            console.error('Error adding pet:', error);
         }
     };
 
@@ -43,20 +47,22 @@ export default function AddPet() {
                         <input type="text" className="form-control" id="name_input" value={name} onChange={(e) => setName(e.target.value)} />
                     </div>
                     <div className="mb-3">
-                        <label htmlFor="gender_input" className="form-label">Gender</label>
-                        <select className="form-select" id="gender_input" value={gender} onChange={(e) => setGender(e.target.value)}>
-                            <option value="">Select</option>
-                            <option value="Male">Male</option>
-                            <option value="Female">Female</option>
-                        </select>                    
-                    </div>
-                    <div className="mb-3">
                         <label htmlFor="age_input" className="form-label">Age</label>
                         <input type="number" className="form-control" id="age_input" value={age} onChange={(e) => setAge(e.target.value)} />
                     </div>
                     <div className="mb-3">
-                        <label htmlFor="breed_input" className="form-label">Breed</label>
-                        <input type="text" className="form-control" id="breed_input" value={breed} onChange={(e) => setBreed(e.target.value)} />
+                        <label htmlFor="gender_input" className="form-label">Gender</label>
+                        <select className="form-select" id="gender_input" onChange={(e) => setGender(e.target.value)}>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                        </select>
+                    </div>
+                    <div className="mb-3">
+                        <label htmlFor="type_input" className="form-label">Type</label>
+                        <select className="form-select" id="type_input" onChange={(e) => setType(e.target.value)}>
+                            <option value="Cat">Cat</option>
+                            <option value="Dog">Dog</option>
+                        </select>
                     </div>
                     <button type="submit" className={styles.roundedbutton}>Submit</button>
                 </form>

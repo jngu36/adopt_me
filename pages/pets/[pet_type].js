@@ -1,49 +1,38 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import AnimalCard from './components/AnimalCard';
+import AnimalCard from '../components/AnimalCard';
 import Link from "next/link";
 import { useEffect, useState } from 'react';
-import Navbar from './components/Navbar';
-import styles from '../styles/pet.module.css';
+import Navbar from '../components/Navbar';
+import styles from '../../styles/pet.module.css';
+import { useRouter } from 'next/router';
 
 export default function Cats() {
+    const router = useRouter();
+    const { pet_type } = router.query;
     const [pets, setPets] = useState([]);
 
-    const handleAdopt = async (petId) => {
+    console.log("type", pet_type);
+
+    const fetchPets = async () => {
         try {
-            const response = await fetch('http://localhost:5000/removepet', {
+            const response = await fetch(`/api/getPets`, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ id: petId })
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ pet_type: pet_type })
             });
+
             if (response.ok) {
                 const data = await response.json();
-                console.log(data.message); // Log success message
-                // Remove the adopted pet from the pets array
-                setPets(prevPets => prevPets.filter(pet => pet._id !== petId));
+                setPets(data.pets);
             } else {
-                throw new Error('Failed to remove pet');
+                throw new Error('Failed to fetch pets');
             }
         } catch (error) {
-            console.error('Error adopting pet:', error);
+            console.error('Error fetching pets:', error);
         }
     };
 
     useEffect(() => {
-        const fetchPets = async () => {
-            try {
-                const response = await fetch('http://localhost:5000/getpets');
-                if (response.ok) {
-                    const data = await response.json();
-                    setPets(data.pets);
-                } else {
-                    throw new Error('Failed to fetch pets');
-                }
-            } catch (error) {
-                console.error('Error fetching pets:', error);
-            }
-        };
         fetchPets();
     }, []);
 
@@ -63,9 +52,6 @@ export default function Cats() {
                                     name={pet.name}
                                     gender={pet.gender}
                                     age={pet.age}
-                                    breed={pet.breed}
-                                    _id={pet._id}
-                                    handleAdopt={handleAdopt}
                                 />
                             </div>
                         ))}

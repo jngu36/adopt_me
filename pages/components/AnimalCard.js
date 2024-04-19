@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from '../../styles/AnimalCard.module.css';
 
-function AnimalCard({ name = "Binugs", gender = "N/A", age = "99", breed = "N/A", img = "/image/adoptme.png", _id, handleAdopt }) {
+function AnimalCard({ name = "Binugs", gender = "N/A", age = "99", adoptedBy = "", img="/image/adoptme.png"}) {
     const handleClick = () => {
         handleAdopt(_id);
     };
@@ -18,9 +18,12 @@ function AnimalCard({ name = "Binugs", gender = "N/A", age = "99", breed = "N/A"
                         <p className="card-text">
                             <b>Gender: {gender}</b> <br />
                             <b>Age: {age}</b><br />
-                            <b>Breed: {breed}</b>
                         </p>
-                        <button className={styles.roundedbutton} onClick={handleClick}>Adopt!</button>
+                        {
+                            adoptedBy ?
+                                <button className={styles.roundedbutton} onClick={handleClick}>I got adopted!</button> :
+                                <button className={styles.roundedbutton} onClick={handleClick}>Adopt!</button>
+                        }
                     </div>
                 </div>
             </div>

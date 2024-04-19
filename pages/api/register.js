@@ -10,7 +10,7 @@ export default async function handler(req, res) {
     const user = await User.create({ email: email, password: pass });
 
     console.log(user);
-    
+
     if (user) {
       res.status(200).json({ data: data })
     } else {

@@ -1,26 +1,27 @@
+import Pet from "../../Model/Pet";
+import mongoose from "mongoose";
+
 export default async function handler(req, res) {
-    if (req.method === 'POST') {
-        try {
-            const { name, gender, age, breed } = req.body;
+    try {
+        const name = req.body.name;
+        const age = req.body.age;
+        const gender = req.body.gender;
+        const type = req.body.pet_type;
 
-            const response = await fetch('http://localhost:5000/addpet', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ name, gender, age, breed }),
-            });
+        console.log(name, age, gender, type)
 
-            if (response.ok) {
-                const data = await response.json();
-                res.status(200).json(data);
-            } else {
-                throw new Error('Add pet failed');
-            }
-        } catch (error) {
-            res.status(500).json({ error: error.message });
+
+        await mongoose.connect(process.env.MONGODB_URI);
+        const pet = await Pet.create({ name: name, age: age, gender: gender, pet_type: type });
+
+        if (pet) {
+            res.status(200).json({ pet: pet })
+        } else {
+            res.status(418).json({ msg: "Something bad happened!" })
         }
-    } else {
-        res.status(405).end();
+    } catch (err) {
+        console.log(err)
+        res.status(500).json({ error: err });
     }
+
 }
